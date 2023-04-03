@@ -39,6 +39,14 @@ public class RequestUtils {
 		return headers;
 	}
 
+	/**
+	 * Método genérico para fazer requisições HTTP com corpo JSON retornando o
+	 * ResponseEntity sem exception mesmo se ocorrer erros HTTP na requisição
+	 * @param url url do destino da requisição
+	 * @param method método para executar a requisição
+	 * @param body o corpo para a requisição
+	 * @return a resposta para a requisição enviada
+	 */
 	public static ResponseEntity<String> doRequestHandled(String url, HttpMethod method, String body) {
 		var headers = basicHeaders();
 		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
@@ -81,14 +89,33 @@ public class RequestUtils {
 			String json = body != null ? mapper.writeValueAsString(body) : null;
 			return doRequest(url, operacao.getMethod(), operacao.getHeaders(), json, true);
 		} catch (JsonProcessingException e) {
-			throw new IllegalArgumentException("Invalid Body");
+			throw new IllegalArgumentException("Invalid Body.");
 		}
 	}
 
+	/**
+	 * Método genérico para fazer requisições HTTP com corpo JSON com a opção de
+	 * escolher os headers
+	 * @param url url do destino da requisição
+	 * @param method método para executar a requisição
+	 * @param headers os cabeçalhos para a requisição
+	 * @param body o corpo para a requisição
+	 * @return a resposta para a requisição enviada
+	 */
 	public static ResponseEntity<String> doRequest(String url, HttpMethod method, HttpHeaders headers, String body) {
 		return doRequest(url, method, headers, body, true);
 	}
 
+	/**
+	 * Método genérico para fazer requisições HTTP com o código da execução da requisição
+	 * @param url url do destino da requisição
+	 * @param method método para executar a requisição
+	 * @param headers os cabeçalhos para a requisição
+	 * @param body o corpo para a requisição
+	 * @param exception True para lançar exception para erros 400 e 500, False para
+	 *                  mandar o response completo independente do status
+	 * @return a resposta para a requisição enviada
+	 */
 	public static ResponseEntity<String> doRequest(String url, HttpMethod method, HttpHeaders headers, String body,
 			boolean exception) {
 		try {

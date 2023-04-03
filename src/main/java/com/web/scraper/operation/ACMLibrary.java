@@ -6,7 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
 public enum ACMLibrary implements HttpOperation {
-    DO_SEARCH("/action/doSearch", HttpMethod.GET);
+    DO_SEARCH("/action/doSearch", HttpMethod.POST);
 
     private final String baseUrl = "https://dl.acm.org";
     private final String endpoint;

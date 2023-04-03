@@ -6,12 +6,20 @@ import java.util.stream.Collectors;
 
 public class UrlUtils {
 
+	/**
+	 * Retorna parâmetros de uma requisição HTTP como uma string para concatenar no
+	 * fim do URL
+	 * 
+	 * @param params Mapa de parâmetros
+	 * @return String com os parâmetros concatenados
+	 */
 	public static String asString(Map<String, Object> params) {
 		if (params == null || params.isEmpty())
 			return "";
-		return "?".concat(params.entrySet().stream()
+		String queryParamsString = params.entrySet().stream()
 				.map(entry -> entry.getKey() + "=" + entry.getValue())
-				.collect(Collectors.joining("&")));
+				.collect(Collectors.joining("&"));
+		return "?".concat(queryParamsString);
 	}
 
 	public static String encodeUrl(String url, List<String> pathParams) {
