@@ -1,0 +1,24 @@
+log-external-requests: true
+show-stack-trace: true
+
+mendeley:
+    username: <fill-in>
+    password: <fill-in>
+
+spring:
+    datasource:
+        username: h2
+        url: jdbc:h2:./database/data;AUTO_SERVER=TRUE
+        driverClassName: org.h2.Driver
+        password: h2
+    h2:
+        console:
+            enabled: true
+            settings:
+                web-allow-others: true
+                trace: false
+            path: /h2-console
+    jpa:
+        hibernate:
+            ddl-auto: update
+        database-platform: org.hibernate.dialect.H2Dialect
