@@ -7,7 +7,6 @@ import com.web.scraper.data.repository.ArticleRepository;
 import com.web.scraper.operation.ACMLibrary;
 import com.web.scraper.operation.Mendeley;
 import com.web.scraper.utils.UrlUtils;
-import com.web.scraper.utils.Utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
@@ -18,7 +17,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -72,7 +70,7 @@ public class ArticleService {
         while (!stop) {
             params.put("startPage", startPage);
             startPage++;
-            var url = UriComponentsBuilder.fromHttpUrl(ACMLibrary.DO_SEARCH.getUrl()).queryParams(UrlUtils.asMultiValueMap(params)).build().getPath();
+            var url = UrlUtils.buildUrl(ACMLibrary.DO_SEARCH, params);
             try {
                 driver.get(url);
             } catch (Exception e) {
