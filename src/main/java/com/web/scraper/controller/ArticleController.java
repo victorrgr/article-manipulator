@@ -1,24 +1,37 @@
 package com.web.scraper.controller;
 
+import com.web.scraper.data.entity.Article;
 import com.web.scraper.data.enums.Library;
+import com.web.scraper.data.repository.ArticleRepository;
 import com.web.scraper.service.ArticleService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
 
     private final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleRepository articleRepository;
+
+    @GetMapping
+    public ResponseEntity<List<Article>> findAll() {
+        var articles = articleRepository.findAll();
+        return ResponseEntity.status(articles.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK)
+                .body(articles);
+    }
 
     @PostMapping("/importAcmLibrary")
     public ResponseEntity<Object> importAcmLibrary(@RequestParam String afterMonth,

@@ -7,9 +7,9 @@ mendeley:
 
 spring:
     datasource:
-        username: h2
-        url: jdbc:h2:./database/data;AUTO_SERVER=TRUE
         driverClassName: org.h2.Driver
+        url: jdbc:h2:./database/data;AUTO_SERVER=TRUE
+        username: h2
         password: h2
     h2:
         console:
